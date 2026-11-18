@@ -74,6 +74,13 @@ export const CONFIG: AppConfig = {
   // cum „sună" fiecare oră în poezie
   times: { "12:00":"la prânz", "15:00":"la trei, după-amiaza", "17:00":"la cinci, când se lasă seara",
            "18:30":"la șase și jumătate", "19:00":"la ora șapte seara", "20:00":"la opt, sub luminile orașului" },
+  // Forma strofei: fiecare element e un rând. Placeholder-e disponibile:
+  //  {zi} = ziua săptămânii („vineri"), {data} = ziua în cuvinte + luna („douăzeci și șapte noiembrie"),
+  //  {ora} = fraza din `times` pentru ora aleasă (sau timeFallback), {vers1} / {vers2} = versurile activității.
+  stanza: {
+    lines: ["{zi}, {data},", "{ora},", "{vers1}", "{vers2}"],
+    timeFallback: "la ora {hh}"   // pentru orele care nu sunt în `times`; {hh} = ora, ex. „21:15"
+  },
   signature: "— scrisă împreună, R. & tu",
   eventTitle: "Strofă nouă",
   minDaysAhead: 0,

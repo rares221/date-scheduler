@@ -43,6 +43,7 @@ export interface AppConfig {
   notify: { web3formsKey: string };
   activities: Activity[];
   times: Record<string, string>;
+  stanza: { lines: string[]; timeFallback: string };
   signature: string;
   eventTitle: string;
   minDaysAhead: number;
