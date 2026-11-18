@@ -6,7 +6,7 @@
   <p class="errmsg">Muzica nu se poate încărca aici.</p>
   <button
     type="button"
-    [class]="music.status() === 'error' ? 'btn btn-primary' : skipShown() ? 'skip show' : 'skip'"
+    [class]="music.status() === 'error' ? 'skip-btn btn btn-primary' : skipShown() ? 'skip-btn skip show' : 'skip-btn skip'"
     (click)="skip()"
   >continuă fără muzică</button>
 </div>

@@ -25,5 +25,5 @@
 .errmsg { display: none; margin: 22px 0 4px; font-size: 17px; color: var(--gold); }
 .gate.err .errmsg { display: block; }
 .gate.err .player-slot, .gate.err .press, .gate.err p:not(.errmsg) { display: none; }
-.gate.err .skip { margin-top: 14px; }
+.gate.err .skip-btn { margin-top: 14px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

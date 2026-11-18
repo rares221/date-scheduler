@@ -71,6 +71,21 @@ describe('MusicService', () => {
     expect(m.status()).toBe('paused');
   });
 
+  it('unstarted (-1) and cued (5) map to paused; buffering (3) leaves status unchanged', async () => {
+    const m = await setup();
+    m.fake.ready();
+    m.fake.fire(PLAYING);
+    m.fake.fire(3);
+    expect(m.status()).toBe('playing');
+    m.fake.fire(-1);
+    expect(m.status()).toBe('paused');
+    m.fake.fire(PLAYING);
+    m.fake.fire(5);
+    expect(m.status()).toBe('paused');
+    m.fake.fire(3);
+    expect(m.status()).toBe('paused');
+  });
+
   it('creates the player with the intro song and exposes the dev hook', async () => {
     const m = await setup();
     expect((window as any).__music.videoId()).toBe('vid');

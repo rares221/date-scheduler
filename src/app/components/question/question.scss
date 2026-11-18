@@ -13,3 +13,7 @@
 @keyframes judge { from { transform: scale(.3) rotate(-20deg); opacity: 0; } }
 .shake { animation: shake .4s; }
 @keyframes shake { 25% { transform: translateX(-6px) rotate(-3deg); } 75% { transform: translateX(6px) rotate(3deg); } }
+/* paritate cu originalul: cardul statea in .panel (.panel h1 / .panel p; p.sub pastreaza culoarea si ritmul lui) */
+h1 { font-size: 46px; }
+p.sub { font-size: 18px; }
+p.msg { font-size: 18px; color: var(--light-muted); line-height: 1.5; margin-top: 12px; }

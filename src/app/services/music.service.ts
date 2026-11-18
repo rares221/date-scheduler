@@ -5,7 +5,7 @@ import { SongKind } from '../data/config.types';
 export type MusicStatus = 'loading' | 'ready' | 'playing' | 'paused' | 'error';
 
 const SONG_ORDER: SongKind[] = ['intro', 'question'];
-const YT_ENDED = 0, YT_PLAYING = 1, YT_PAUSED = 2;
+const YT_UNSTARTED = -1, YT_ENDED = 0, YT_PLAYING = 1, YT_PAUSED = 2, YT_CUED = 5;
 const FADE_STEPS = 12;
 const FADE_MS = 65;
 const READY_TIMEOUT_MS = 10000;
@@ -157,8 +157,9 @@ export class MusicService {
   }
 
   private onState(state: number): void {
+    // BUFFERING (3) and ENDED (0, loops) leave the status unchanged
     if (state === YT_PLAYING) this._status.set('playing');
-    else if (state === YT_PAUSED) this._status.set('paused');
+    else if (state === YT_PAUSED || state === YT_UNSTARTED || state === YT_CUED) this._status.set('paused');
     this.updateTitle();
     if (state === YT_PLAYING) this.unlock(true);
     if (state === YT_ENDED && this.player) {

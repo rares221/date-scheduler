@@ -40,12 +40,12 @@ Content lives in `src/app/data/config.ts` (the author asked for a separate confi
 1. **"Press play" gate**: a full-screen overlay, "Ai un mesaj / Pune-ți căștile și apasă play", with an embedded YouTube player. The page is scroll-locked (`body.locked`) until the player reports `PLAYING`. Then the gate fades and the player becomes a **full-screen background** (`#playerWrap.bgmode`, `body.vidbg`):
    - Cover-sized behind the page using the song's `vertical` flag (9:16 vs 16:9), plus `--crop` (110px) of overflow above and below. That pushes YouTube's own title, channel avatar and controls off-screen. Keep the crop: the avatar is an artist photo.
    - A bottom-heavy dark veil (`::after`), `pointer-events:none`, blobs hidden, embers/eq above it.
-   - "Acum cântă" pill bottom-left (`#mini`): CSS vinyl, title from `player.getVideoData().title`, SVG play/pause.
-   - **Embed error fallback** (`ytFail()`): on `onError`, or if the player isn't ready after 10 s, it hides the player and shows "Muzica nu se poate încărca aici." The "continuă fără muzică" button becomes a primary button. That button otherwise appears after 6 s.
+   - "Acum cântă" pill bottom-left (`.mini` in `now-playing`): CSS vinyl, title from `player.getVideoData().title`, SVG play/pause.
+   - **Embed error fallback** (`MusicService.fail`, status `'error'`): on `onError`, or if the player isn't ready after 10 s, it hides the player and shows "Muzica nu se poate încărca aici." The "continuă fără muzică" button becomes a primary button. That button otherwise appears after 6 s.
 2. **Scroll story**: full-height panels from `CONFIG.story` that reveal on scroll (IntersectionObserver). Each has a title and text, and the Sheeba panel has a photo.
    **Music per section**: elements with `data-song` (story = `intro`, ask panel = `question`) switch songs when they cross 45% of the viewport. Switching only goes forward and skips empty ids. It stops once Da/Nu have chosen `yes`/`no`.
 3. **Question card**: "Iubito, ieși cu mine?" with a big **Da!** and a small underlined **nu** link that is always available.
-   - **nu**: Sheeba's judging photo pops in, the card shakes, the caption cycles through `CONFIG.noMessages`, and it switches to `songs.no` (empty id means the music pauses). A form "un motiv bun" (`CONFIG.noReason`) appears. Submitting it emails the reason to the author via `notify()` and shows `noReason.sent`. The Da button stays.
+   - **nu**: Sheeba's judging photo pops in, the card shakes, the caption cycles through `CONFIG.noMessages`, and it switches to `songs.no` (empty id means the music pauses). A form "un motiv bun" (`CONFIG.noReason`) appears. Submitting it emails the reason to the author via `NotifyService.send` and shows `noReason.sent`. The Da button stays.
    - **Da**: confetti, then `songs.yes` (Love Me Like You), then step 1.
 4. **Step 1/2**: pick the activity (`CONFIG.activities`; an optional `times:[...]` limits it to those hours).
 5. **Step 2/2**: date and time, plus an optional note ("Vrei să-mi spui ceva?", max 200 characters).
@@ -53,7 +53,7 @@ Content lives in `src/app/data/config.ts` (the author asked for a separate confi
    - Otherwise there's a native date input plus chips from the keys of `CONFIG.times`.
 6. **"Strofă nouă"**: a typewriter animation writes a stanza built from her choices on lined cream paper. The stanza template is `CONFIG.stanza` (`lines` with the placeholders `{zi} {data} {ora} {vers1} {vers2}`, and `timeFallback` with `{hh}` for times not in `CONFIG.times`). By default: `weekday, <day in Romanian words> <month>,` / `<CONFIG.times[time]>` (or "la ora HH:MM") `,` / `activity.verse[0]` / `activity.verse[1]`, plus `CONFIG.signature`. Her note is shown below.
    Concept: *the author writes her poems; this one they "write together", and she picks the words.*
-   When she presses Gata, `notify()` emails the author the activity, date, time and note.
+   When she presses Gata, `NotifyService.send` emails the author the activity, date, time and note.
 7. **Calendar**:
    - On iPhone + Chrome, the **Google Calendar link** is the primary button and the `.ics` download is secondary. Elsewhere `.ics` is primary. Safari on iOS gets a `data:text/calendar` URL.
    - Event title: `CONFIG.eventTitle` ("Strofă nouă"). The description has the stanza, signature, activity and note (escaped and folded for ICS). There's a 2 h VALARM. Times are in UTC.
@@ -67,7 +67,7 @@ Types are in `config.types.ts`.
 - Palette: **black, gold, champagne, with dusty rose as the extra accent**. The CSS variables are in `:root`.
 - Fonts: Fraunces (headings and the italic poem) and DM Sans (UI), from Google Fonts.
 - **No emoji anywhere** in the UI, the calendar text or the emails (the author asked for a clean look). Icons are inline SVG. The floating ♪ ♫ glyphs in the background are fine.
-- Background effects: embers, music notes, twinkles, and an equalizer strip that pulses while music plays. `burst()` makes gold confetti and rising gold sparkles.
+- Background effects: embers, music notes, twinkles, and an equalizer strip that pulses while music plays. `FxService.burst` makes gold confetti and rising gold sparkles.
 - Respect `prefers-reduced-motion` (already handled).
 
 ## Hard constraints (don't break these)
@@ -80,7 +80,7 @@ Types are in `config.types.ts`.
   - Inputs and textareas need `font-size:16px`.
   - Keep the safe-area insets.
   - Tap targets are at least 44 px.
-- **No backend, no secrets.** The only outside call is `notify()` → Web3Forms, which the author approved on 2026-11-18. Its access key is public by design: it can only send mail to the author's own address. Spam is the only risk. An empty key means nothing is sent. The repo is public and the page has `noindex`.
+- **No backend, no secrets.** The only outside call is `NotifyService.send` → Web3Forms, which the author approved on 2026-11-18. Its access key is public by design: it can only send mail to the author's own address. Spam is the only risk. An empty key means nothing is sent. The repo is public and the page has `noindex`.
 - **YouTube embeds fail on IP-address origins** (VEVO error 150: "Video unavailable"). Test on `localhost` or a hostname (e.g. `http://192-168-1-14.nip.io:8000` from a phone), never `http://192.168.x.x`.
 - `model/` stays local-only and git-ignored. Never commit `.superpowers/` (SDD scratch, git-ignored).
 
