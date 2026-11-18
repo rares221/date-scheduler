@@ -1,0 +1,29 @@
+.gate {
+  position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: calc(20px + var(--st)) 22px calc(20px + var(--sb)); text-align: center; transition: opacity .7s;
+  background: rgba(10,8,9,.62); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+.gate.gone { opacity: 0; pointer-events: none; }
+.gate h1 { font-size: 40px; margin-bottom: 8px; }
+.gate p { color: var(--light-muted); line-height: 1.5; }
+.player-slot { width: 100%; max-width: 360px; aspect-ratio: 16/9; margin: 24px 0 14px; }
+.press {
+  display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--gold);
+}
+.press::before {
+  content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent); animation: ping 1.4s infinite;
+}
+@keyframes ping { 70% { box-shadow: 0 0 0 12px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.skip {
+  margin-top: 22px; background: none; border: 0; color: var(--light-muted); font: inherit; font-size: 14px;
+  text-decoration: underline; opacity: 0; transition: opacity .5s; pointer-events: none;
+}
+.skip.show { opacity: 1; pointer-events: auto; }
+/* YouTube nu merge: ascundem playerul, butonul de continuare devine principal */
+.errmsg { display: none; margin: 22px 0 4px; font-size: 17px; color: var(--gold); }
+.gate.err .errmsg { display: block; }
+.gate.err .player-slot, .gate.err .press, .gate.err p:not(.errmsg) { display: none; }
+.gate.err .skip { margin-top: 14px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

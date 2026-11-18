@@ -1,0 +1,12 @@
+<div class="gate" [class.gone]="music.unlocked()" [class.err]="music.status() === 'error' && !music.unlocked()">
+  <h1><span class="grad">Ai un mesaj</span></h1>
+  <p>Pune-ți căștile și apasă play.</p>
+  <div class="player-slot" id="slot" #slot></div>
+  <div class="press">Press play</div>
+  <p class="errmsg">Muzica nu se poate încărca aici.</p>
+  <button
+    type="button"
+    [class]="music.status() === 'error' ? 'btn btn-primary' : skipShown() ? 'skip show' : 'skip'"
+    (click)="skip()"
+  >continuă fără muzică</button>
+</div>

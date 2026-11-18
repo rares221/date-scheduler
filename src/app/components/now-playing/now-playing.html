@@ -1,0 +1,17 @@
+@if (music.musicOn()) {
+  <div class="mini" [class.playing]="music.playing()">
+    <i class="disc" aria-hidden="true"></i>
+    <div class="np"><small>Acum cântă</small><span>{{ music.title() || '…' }}</span></div>
+    <button
+      type="button"
+      [class.paused]="!music.playing()"
+      [attr.aria-label]="music.playing() ? 'Pauză' : 'Pornește muzica'"
+      (click)="music.toggle()"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <g class="ic-pause"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></g>
+        <path class="ic-play" d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/>
+      </svg>
+    </button>
+  </div>
+}

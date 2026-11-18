@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject } from '@angular/core';
 import { AmbientBg } from '../../components/ambient-bg/ambient-bg';
 import { FxLayer } from '../../components/fx-layer/fx-layer';
+import { Gate } from '../../components/gate/gate';
+import { NowPlaying } from '../../components/now-playing/now-playing';
+import { VideoBg } from '../../components/video-bg/video-bg';
 import { BookingStateService } from '../../services/booking-state.service';
 import { MusicService } from '../../services/music.service';
 
 @Component({
   selector: 'app-date-page',
-  imports: [AmbientBg, FxLayer],
+  imports: [AmbientBg, FxLayer, Gate, VideoBg, NowPlaying],
   templateUrl: './date.page.html',
   styleUrl: './date.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
