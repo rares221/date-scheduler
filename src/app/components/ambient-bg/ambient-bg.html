@@ -1,0 +1,9 @@
+<div class="bg" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  @for (e of embers; track $index) { <i class="ember" [style]="e"></i> }
+  @for (n of notes; track $index) { <i class="note" [style]="n.style">{{ n.glyph }}</i> }
+  @for (s of sparkles; track $index) { <i class="sparkle" [style]="s"></i> }
+</div>
+<div class="eq" #eq aria-hidden="true">
+  @for (b of bars; track $index) { <i></i> }
+</div>

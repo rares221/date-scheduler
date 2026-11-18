@@ -1,0 +1,6 @@
+:host { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 40; display: block; }
+i { position: absolute; font-style: normal; }
+.c { width: 9px; height: 14px; border-radius: 2px; top: -20px; animation: fall linear forwards; }
+.h { bottom: -40px; border-radius: 50%; box-shadow: 0 0 10px 2px rgba(243,213,138,.55); animation: up linear forwards; }
+@keyframes fall { to { transform: translate(var(--dx), 110vh) rotate(var(--r)); } }
+@keyframes up { to { transform: translateY(-115vh) rotate(var(--r)); opacity: .2; } }

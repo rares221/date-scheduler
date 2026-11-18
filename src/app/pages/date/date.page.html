@@ -1,0 +1,20 @@
+<app-ambient-bg />
+<app-fx-layer />
+<!-- <app-gate /> <app-video-bg /> <app-now-playing /> arrive in Tasks 6-7 -->
+
+<main class="app">
+  @switch (state.screen()) {
+    @case ('ask') {
+      <section class="screen active" data-screen="ask"><!-- app-story + app-question: Task 8 --></section>
+    }
+    @case ('activity') {
+      <section class="screen active" data-screen="activity"><!-- app-activity-step: Task 9 --></section>
+    }
+    @case ('when') {
+      <section class="screen active" data-screen="when"><!-- app-when-step: Task 9 --></section>
+    }
+    @case ('done') {
+      <section class="screen active" data-screen="done"><!-- app-done-step: Task 9 --></section>
+    }
+  }
+</main>

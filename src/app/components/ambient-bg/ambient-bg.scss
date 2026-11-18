@@ -1,0 +1,23 @@
+:host { display: contents; }
+.bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; animation: drift 18s ease-in-out infinite alternate; }
+.b1 { width: 70vmax; height: 70vmax; background: #9c7424; left: -30vmax; top: -25vmax; opacity: .38; }
+.b2 { width: 60vmax; height: 60vmax; background: #7a2f47; right: -30vmax; bottom: -20vmax; animation-delay: -6s; opacity: .4; }
+.b3 { width: 45vmax; height: 45vmax; background: #3d2c0c; left: 20vmax; top: 40vh; opacity: .5; animation-delay: -12s; }
+@keyframes drift { to { transform: translate(8vmax, 6vmax) scale(1.15); } }
+:host-context(body.playing) .blob { animation-duration: 9s; }
+.ember, .note { position: absolute; bottom: -30px; will-change: transform, opacity; }
+.ember { width: 6px; height: 6px; border-radius: 50%; background: radial-gradient(circle, #fff6d8, var(--accent) 55%, transparent 70%); animation: rise linear infinite; }
+.note { color: rgba(243,213,138,.4); font-size: 22px; font-style: normal; animation: rise linear infinite; }
+@keyframes rise {
+  0% { transform: translate(0, 0) rotate(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translate(var(--dx), -110vh) rotate(var(--r)); opacity: 0; }
+}
+.sparkle { position: absolute; width: 3px; height: 3px; background: #fff6d8; border-radius: 50%; box-shadow: 0 0 8px 2px rgba(243,213,138,.85); animation: twinkle 2.4s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4); } 50% { opacity: 1; transform: scale(1); } }
+.eq { position: fixed; left: 0; right: 0; bottom: 0; height: 90px; display: flex; align-items: flex-end; gap: 3px; padding: 0 6px; opacity: .28; z-index: 0; pointer-events: none; }
+.eq i { flex: 1; background: linear-gradient(to top, #a8792a, var(--gold)); border-radius: 3px 3px 0 0; height: 6px; transition: height .12s; }
+:host-context(body.vidbg) .bg { z-index: 1; }
+:host-context(body.vidbg) .blob { display: none; }
+:host-context(body.vidbg) .eq { z-index: 1; }

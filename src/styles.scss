@@ -1,1 +1,98 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  /* palette: black · gold · champagne · dusty rose */
+  --night: #0a0809; --ink: #f3e7cf; --muted: #a89a85; --light: #f6ead2; --light-muted: #bfae92;
+  --accent: #d9b25a; --gold: #f3d58a; --rose: #e7a3b5; --fire: #c8962e;
+  --gold-grad: linear-gradient(135deg, #f8e3a3 0%, #d9b25a 45%, #a8792a 100%);
+  --card: #141013; --line: rgba(217, 178, 90, .22); --radius: 22px;
+  --st: env(safe-area-inset-top, 0px); --sb: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; background: var(--night); }
+body {
+  font-family: "DM Sans", system-ui, -apple-system, sans-serif; color: var(--light); background: var(--night);
+  min-height: 100vh; min-height: 100svh; overflow-x: hidden;
+}
+body.locked { overflow: hidden; height: 100vh; height: 100svh; }
+body.locked .app { visibility: hidden; }
+
+.app { position: relative; z-index: 2; width: 100%; max-width: 440px; margin: 0 auto; padding: 0 20px; }
+.screen { display: none; }
+.screen.active { display: block; animation: in .45s cubic-bezier(.2, .8, .2, 1); }
+@keyframes in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.center {
+  min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+  padding: calc(24px + var(--st)) 0 calc(110px + var(--sb));
+}
+
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s cubic-bezier(.2, .8, .2, 1); }
+.reveal.seen { opacity: 1; transform: none; }
+.grad { background: linear-gradient(90deg, var(--gold), var(--accent) 55%, var(--rose)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* cards + type */
+.card {
+  background: linear-gradient(180deg, rgba(26, 20, 22, .94), rgba(14, 11, 12, .96)); color: var(--ink);
+  border-radius: var(--radius); padding: 28px 22px; border: 1px solid rgba(217, 178, 90, .35);
+  box-shadow: 0 25px 70px -25px rgba(217, 178, 90, .45), inset 0 1px 0 rgba(248, 227, 163, .15); position: relative;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.card h1, .card h2 { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.step { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 10px; }
+h1, h2 { font-family: "Fraunces", serif; line-height: 1.05; }
+h1 { font-size: 40px; font-weight: 800; }
+h2 { font-size: 28px; font-weight: 600; margin-bottom: 6px; }
+p.sub { color: var(--muted); margin-top: 8px; line-height: 1.45; }
+
+/* buttons */
+.btn {
+  font: inherit; font-size: 16px; font-weight: 700; border: 0; border-radius: 999px; padding: 15px 26px; min-height: 50px; cursor: pointer;
+  transition: transform .15s, background .2s, box-shadow .2s; touch-action: manipulation; -webkit-appearance: none; appearance: none;
+}
+.btn:active { transform: scale(.96); }
+.btn-primary { background: var(--gold-grad); color: #1a1206; box-shadow: 0 10px 26px -10px rgba(217, 178, 90, .9); }
+.btn-primary:disabled { background: #2c261d; color: #6f6452; box-shadow: none; cursor: not-allowed; }
+.btn-ghost { background: rgba(243, 231, 207, .06); color: var(--ink); border: 1px solid rgba(217, 178, 90, .3); }
+.row { display: flex; gap: 12px; align-items: center; margin-top: 26px; flex-wrap: wrap; }
+.row.end { justify-content: space-between; }
+
+/* options, chips, inputs */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.opt {
+  border: 1.5px solid var(--line); background: rgba(255, 255, 255, .03); border-radius: 16px; padding: 14px 12px; text-align: left; cursor: pointer;
+  font: inherit; color: inherit; transition: border-color .15s, transform .15s, background .15s; touch-action: manipulation;
+}
+.opt:active { transform: scale(.97); }
+.opt .e { font-size: 26px; display: block; margin-bottom: 6px; }
+.opt b { display: block; font-size: 15px; }
+.opt small { color: var(--muted); font-size: 12.5px; }
+.opt.sel { border-color: var(--accent); background: rgba(217, 178, 90, .12); box-shadow: 0 0 0 3px rgba(217, 178, 90, .15); }
+label.f { display: block; font-weight: 700; font-size: 14px; margin: 18px 0 8px; }
+label.f .opt-tag { font-weight: 400; color: var(--muted); }
+input[type=date] {
+  width: 100%; font: inherit; font-size: 16px; padding: 13px 14px; min-height: 52px; border-radius: 14px;
+  border: 1.5px solid var(--line); background: rgba(255, 255, 255, .04); color: var(--ink);
+  -webkit-appearance: none; appearance: none; display: block; text-align: left; color-scheme: dark;
+}
+input[type=date]::-webkit-date-and-time-value { text-align: left; }
+input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+textarea {
+  width: 100%; font: inherit; font-size: 16px; padding: 13px 14px; min-height: 88px; border-radius: 14px; resize: vertical; line-height: 1.4;
+  border: 1.5px solid var(--line); background: rgba(255, 255, 255, .04); color: var(--ink);
+  -webkit-appearance: none; appearance: none; display: block; color-scheme: dark;
+}
+textarea::placeholder { color: var(--muted); opacity: .8; }
+.chips[hidden], input[hidden] { display: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1.5px solid var(--line); background: rgba(255, 255, 255, .03); border-radius: 999px; padding: 10px 16px; min-height: 44px;
+  font: inherit; font-size: 16px; font-weight: 500; cursor: pointer; color: var(--ink); touch-action: manipulation;
+}
+.chip.sel { border-color: transparent; background: var(--gold-grad); color: #1a1206; font-weight: 700; }
+.msg { font-size: 14px; margin-top: 12px; color: var(--rose); min-height: 1.2em; }
+.dots { display: flex; gap: 6px; justify-content: center; margin-top: 18px; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(217, 178, 90, .25); }
+.dots i.on { background: var(--accent); width: 20px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
