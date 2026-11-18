@@ -16,8 +16,8 @@
       <label class="f" for="date">Ziua</label>
       <input type="date" id="date" [min]="minDate()" [value]="state.date()" (input)="onDate($event)" (change)="onDate($event)" />
     }
-    <label class="f">Ora</label>
-    <div class="chips times">
+    <label class="f" id="timeLabel">Ora</label>
+    <div class="chips times" role="group" aria-labelledby="timeLabel">
       @if (avail() && !state.date()) {
         <p class="sub hint">Alege întâi ziua.</p>
       } @else {

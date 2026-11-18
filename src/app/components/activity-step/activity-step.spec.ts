@@ -1,9 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { BookingStateService } from '../../services/booking-state.service';
 import { ActivityStep } from './activity-step';
 
 describe('ActivityStep', () => {
+  beforeEach(() => vi.spyOn(window, 'scrollTo').mockImplementation(() => {}));
+  afterEach(() => vi.restoreAllMocks());
+
   it('enables Mai departe after choosing Cină', async () => {
     const f = TestBed.createComponent(ActivityStep);
     await f.whenStable();

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { APP_CONFIG, CONFIG } from '../../data/config';
 import { BookingStateService } from '../../services/booking-state.service';
 import { WhenStep } from './when-step';
@@ -15,6 +15,16 @@ function setup(availability: { date: string; times: string[] }[], activity?: unk
 const chips = (el: HTMLElement, sel: string) => [...el.querySelectorAll<HTMLButtonElement>(sel)];
 
 describe('WhenStep', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-11-18T10:00:00'));
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   it('falls back to native date input with 6 time chips', async () => {
     const { f, el } = setup([]);
     await f.whenStable();
@@ -54,5 +64,51 @@ describe('WhenStep', () => {
     expect(done.disabled).toBe(false);
     done.click();
     expect(state.screen()).toBe('done');
+  });
+
+  it('clears date and time when a new activity makes the day unusable', async () => {
+    const { f, el, state } = setup([{ date: '2026-11-27', times: ['18:30', '20:00'] }]);
+    await f.whenStable();
+    chips(el, '.dates .chip')[0].click();
+    await f.whenStable();
+    chips(el, '.times .chip')[0].click();
+    await f.whenStable();
+    expect(state.date()).toBe('2026-11-27');
+    expect(state.time()).toBe('18:30');
+    state.activity.set({ ...CONFIG.activities[0], times: ['12:00'] } as never);
+    await f.whenStable();
+    expect(state.date()).toBe('');
+    expect(state.time()).toBe('');
+  });
+
+  it('clears a time not offered on the newly selected day', async () => {
+    const { f, el, state } = setup([
+      { date: '2026-11-27', times: ['18:30', '20:00'] },
+      { date: '2026-11-28', times: ['20:00'] },
+    ]);
+    await f.whenStable();
+    chips(el, '.dates .chip')[0].click();
+    await f.whenStable();
+    chips(el, '.times .chip')[0].click();
+    await f.whenStable();
+    expect(state.time()).toBe('18:30');
+    chips(el, '.dates .chip')[1].click();
+    await f.whenStable();
+    expect(state.date()).toBe('2026-11-28');
+    expect(state.time()).toBe('');
+  });
+
+  it('native mode: clears a time the new activity excludes', async () => {
+    const { f, el, state } = setup([]);
+    await f.whenStable();
+    const all = chips(el, '.times .chip');
+    const first = all[0].textContent!.trim();
+    const last = all[all.length - 1].textContent!.trim();
+    all[0].click();
+    await f.whenStable();
+    expect(state.time()).toBe(first);
+    state.activity.set({ ...CONFIG.activities[0], times: [last] } as never);
+    await f.whenStable();
+    expect(state.time()).toBe('');
   });
 });
