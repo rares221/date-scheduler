@@ -1,0 +1,24 @@
+@if (b(); as bk) {
+  <div class="center">
+    <div class="card">
+      <h2 class="c">Strofă nouă</h2>
+      <p class="sub c">Ai ales cuvintele. Iată ce am scris împreună:</p>
+      <div class="poem">{{ typed() }}<span class="caret"></span></div>
+      <div class="sig" [class.show]="finished()">{{ signature }}</div>
+      @if (state.noteText(); as note) {
+        <p class="note-out"><b>Nota ta:</b> „{{ note }}”</p>
+      }
+      <div class="meta">
+        <span>{{ bk.activity.name }}</span><span>· {{ bk.time }}</span><span>· {{ bk.activity.location }}</span>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn" [class.btn-primary]="!iosChrome" [class.btn-ghost]="iosChrome"
+          [style.order]="iosChrome ? 2 : 1" (click)="downloadIcs()">{{ iosChrome ? 'Descarcă invitația (.ics)' : 'Adaugă în calendar' }}</button>
+        <a class="btn" [class.btn-primary]="iosChrome" [class.btn-ghost]="!iosChrome" [style.order]="iosChrome ? 1 : 2"
+          [href]="gcal()" target="_blank" rel="noopener">{{ iosChrome ? 'Adaugă în Google Calendar' : 'Deschide în Google Calendar' }}</a>
+        <button type="button" class="btn btn-ghost" style="order: 9" (click)="state.go('activity')">Schimbă ceva</button>
+      </div>
+      <p class="msg">{{ msg() }}</p>
+    </div>
+  </div>
+}

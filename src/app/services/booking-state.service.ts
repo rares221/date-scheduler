@@ -11,6 +11,8 @@ export class BookingStateService {
   readonly date = signal('');
   readonly time = signal('');
   readonly note = signal('');
+  /** Key of the last booking emailed to the owner (send once per distinct booking). */
+  lastNotified = '';
 
   readonly noteText = computed(() => this.note().trim().slice(0, 200));
 

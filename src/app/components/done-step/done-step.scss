@@ -1,0 +1,18 @@
+:host { display: block; }
+.c { text-align: center; }
+.poem {
+  margin-top: 18px; padding: 22px 20px; border-radius: 16px; background: #f8eedb; border: 1px solid var(--accent);
+  font-family: "Fraunces", serif; font-style: italic; font-size: 18px; line-height: 30px; color: #2a1f12; min-height: 190px;
+  background-image: repeating-linear-gradient(transparent 0 29px, #e6d3ae 29px 30px); background-position: 0 22px;
+  white-space: pre-wrap;
+}
+.caret { display: inline-block; width: 2px; height: 1.1em; background: #a8792a; vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.sig { margin-top: 12px; text-align: right; font-family: "Fraunces", serif; font-style: italic; color: var(--muted); opacity: 0; transition: opacity .8s; }
+.sig.show { opacity: 1; }
+.note-out { margin: 10px 0 0; font-size: 14px; line-height: 1.45; color: var(--muted); text-align: center; overflow-wrap: anywhere; }
+.note-out b { font-weight: 600; color: var(--ink); }
+.meta { margin-top: 14px; font-size: 14px; color: var(--muted); display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+.actions .btn { width: 100%; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+@media (prefers-reduced-motion: reduce) { .caret { animation: none; } .sig { transition: none; } }

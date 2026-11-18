@@ -3,6 +3,7 @@ import { AmbientBg } from '../../components/ambient-bg/ambient-bg';
 import { FxLayer } from '../../components/fx-layer/fx-layer';
 import { Gate } from '../../components/gate/gate';
 import { ActivityStep } from '../../components/activity-step/activity-step';
+import { DoneStep } from '../../components/done-step/done-step';
 import { WhenStep } from '../../components/when-step/when-step';
 import { Question } from '../../components/question/question';
 import { Story } from '../../components/story/story';
@@ -13,7 +14,7 @@ import { MusicService } from '../../services/music.service';
 
 @Component({
   selector: 'app-date-page',
-  imports: [AmbientBg, FxLayer, Gate, VideoBg, NowPlaying, Story, Question, ActivityStep, WhenStep],
+  imports: [AmbientBg, FxLayer, Gate, VideoBg, NowPlaying, Story, Question, ActivityStep, WhenStep, DoneStep],
   templateUrl: './date.page.html',
   styleUrl: './date.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
