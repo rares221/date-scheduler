@@ -59,7 +59,10 @@ test('music path', async ({ page }) => {
   // pause toggles the player and the label
   await page.getByRole('button', { name: 'Pauză' }).click();
   await expect(page.getByRole('button', { name: 'Pornește muzica' })).toBeVisible();
-  await expect.poll(() => page.evaluate(() => (window as any).__music?.state())).toBe(2);
+  // __music is a dev-mode-only hook; absent in production builds (BASE_URL runs against dist)
+  if (await page.evaluate(() => !!(window as any).__music)) {
+    await expect.poll(() => page.evaluate(() => (window as any).__music?.state())).toBe(2);
+  }
   await page.getByRole('button', { name: 'Pornește muzica' }).click();
   await expect(page.getByRole('button', { name: 'Pauză' })).toBeVisible();
 
@@ -81,9 +84,11 @@ test('music path', async ({ page }) => {
   expect(JSON.stringify(posts[0])).toContain('motiv');
 
   await page.getByRole('button', { name: 'Da!' }).click();
-  await expect
-    .poll(() => page.evaluate(() => (window as any).__music?.videoId()), { timeout: 8000 })
-    .toBe('1WpoKRnoPRU');
+  if (await page.evaluate(() => !!(window as any).__music)) {
+    await expect
+      .poll(() => page.evaluate(() => (window as any).__music?.videoId()), { timeout: 8000 })
+      .toBe('1WpoKRnoPRU');
+  }
 
   await finishFlow(page, posts);
   expect(posts.length).toBe(2);
