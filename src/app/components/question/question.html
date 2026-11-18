@@ -1,0 +1,17 @@
+<div class="card" appReveal style="text-align: center" #card>
+  <div class="judge" #judge><img [src]="cfg.photos.judging" alt="Sheeba, foarte dezamăgită"></div>
+  <h1>{{ title }}</h1>
+  <p class="sub">{{ cfg.subtitle }}</p>
+  <div class="row" style="justify-content: center">
+    <button class="btn btn-primary" type="button" (click)="yes()">Da!</button>
+  </div>
+  <button class="no-link" type="button" (click)="no()">nu</button>
+  <p class="msg">{{ caption() }}</p>
+  <form class="reason" [hidden]="!formShown()" (submit)="submit($event)">
+    <label class="f" for="reason">{{ cfg.noReason.prompt }}</label>
+    <textarea id="reason" maxlength="300" rows="3" [placeholder]="cfg.noReason.placeholder"
+      [value]="reason()" (input)="onInput($event)"></textarea>
+    <button class="btn btn-ghost" type="submit" [disabled]="!canSend()">Trimite motivul</button>
+    <p class="msg">{{ sentMsg() }}</p>
+  </form>
+</div>

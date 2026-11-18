@@ -1,0 +1,18 @@
+@for (p of cfg.story; track $index) {
+  <div class="panel" data-song="intro">
+    <div appReveal>
+      @if (p.photo) {
+        <div class="photo"><img [src]="cfg.photos[p.photo]" alt=""></div>
+      }
+      @if (p.hint) {
+        <h1>{{ p.title }}</h1>
+      } @else {
+        <h2>{{ p.title }}</h2>
+      }
+      <p>{{ p.text }}</p>
+      @if (p.hint) {
+        <div class="hint">scroll<span>↓</span></div>
+      }
+    </div>
+  </div>
+}
