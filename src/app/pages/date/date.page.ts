@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject } from '
 import { AmbientBg } from '../../components/ambient-bg/ambient-bg';
 import { FxLayer } from '../../components/fx-layer/fx-layer';
 import { Gate } from '../../components/gate/gate';
+import { ActivityStep } from '../../components/activity-step/activity-step';
+import { WhenStep } from '../../components/when-step/when-step';
 import { Question } from '../../components/question/question';
 import { Story } from '../../components/story/story';
 import { NowPlaying } from '../../components/now-playing/now-playing';
@@ -11,7 +13,7 @@ import { MusicService } from '../../services/music.service';
 
 @Component({
   selector: 'app-date-page',
-  imports: [AmbientBg, FxLayer, Gate, VideoBg, NowPlaying, Story, Question],
+  imports: [AmbientBg, FxLayer, Gate, VideoBg, NowPlaying, Story, Question, ActivityStep, WhenStep],
   templateUrl: './date.page.html',
   styleUrl: './date.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

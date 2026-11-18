@@ -61,7 +61,6 @@ p.sub { color: var(--muted); margin-top: 8px; line-height: 1.45; }
   font: inherit; color: inherit; transition: border-color .15s, transform .15s, background .15s; touch-action: manipulation;
 }
 .opt:active { transform: scale(.97); }
-.opt .e { font-size: 26px; display: block; margin-bottom: 6px; }
 .opt b { display: block; font-size: 15px; }
 .opt small { color: var(--muted); font-size: 12.5px; }
 .opt.sel { border-color: var(--accent); background: rgba(217, 178, 90, .12); box-shadow: 0 0 0 3px rgba(217, 178, 90, .15); }

@@ -1,0 +1,19 @@
+<div class="center">
+  <div class="card">
+    <div class="step">Pasul 1 din 2</div>
+    <h2>Ce facem?</h2>
+    <p class="sub">Alege ce ți se pare cel mai fain.</p>
+    <div class="grid">
+      @for (a of activities; track a.id) {
+        <button type="button" class="opt" [class.sel]="state.activity()?.id === a.id" (click)="state.activity.set(a)">
+          <b>{{ a.name }}</b><small>{{ a.desc }}</small>
+        </button>
+      }
+    </div>
+    <div class="row end">
+      <button type="button" class="btn btn-ghost" (click)="state.go('ask')">Înapoi</button>
+      <button type="button" class="btn btn-primary" [disabled]="!state.activity()" (click)="state.go('when')">Mai departe</button>
+    </div>
+  </div>
+  <div class="dots"><i class="on"></i><i></i></div>
+</div>

@@ -1,0 +1,37 @@
+<div class="center">
+  <div class="card">
+    <div class="step">Pasul 2 din 2</div>
+    <h2>Când?</h2>
+    <p class="sub">Alege ziua și ora care ți se potrivesc.</p>
+    @if (avail()) {
+      <label class="f" id="dateLabel">Ziua</label>
+      <div class="chips dates" role="group" aria-labelledby="dateLabel">
+        @for (d of usable(); track d.date) {
+          <button type="button" class="chip" [class.sel]="state.date() === d.date" (click)="state.date.set(d.date)">{{ av.dayLabel(d.date) }}</button>
+        } @empty {
+          <p class="sub hint">Pentru varianta asta n-am o zi liberă încă. Alege altceva?</p>
+        }
+      </div>
+    } @else {
+      <label class="f" for="date">Ziua</label>
+      <input type="date" id="date" [min]="minDate()" [value]="state.date()" (input)="onDate($event)" (change)="onDate($event)" />
+    }
+    <label class="f">Ora</label>
+    <div class="chips times">
+      @if (avail() && !state.date()) {
+        <p class="sub hint">Alege întâi ziua.</p>
+      } @else {
+        @for (t of times(); track t) {
+          <button type="button" class="chip" [class.sel]="state.time() === t" (click)="state.time.set(t)">{{ t }}</button>
+        }
+      }
+    </div>
+    <label class="f" for="note">Vrei să-mi spui ceva? <span class="opt-tag">(opțional)</span></label>
+    <textarea id="note" maxlength="200" rows="3" placeholder="o dorință, un gând, orice…" [value]="state.note()" (input)="onNote($event)"></textarea>
+    <div class="row end">
+      <button type="button" class="btn btn-ghost" (click)="state.go('activity')">Înapoi</button>
+      <button type="button" class="btn btn-primary" [disabled]="!(state.date() && state.time())" (click)="state.go('done')">Gata!</button>
+    </div>
+  </div>
+  <div class="dots"><i></i><i class="on"></i></div>
+</div>
