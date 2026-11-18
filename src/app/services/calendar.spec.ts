@@ -19,7 +19,8 @@ describe('calendar', () => {
     expect(ics).toContain('SUMMARY:Strofă nouă');
     expect(ics).toContain('TRIGGER:-PT2H');
     expect(ics).not.toContain('ORGANIZER');
-    expect(buildICS(bk('2026-11-27', '20:00'), CONFIG, now)).toContain('ORGANIZER;CN=');
+    expect(buildICS(bk('2026-11-27', '20:00'), { ...CONFIG, organizerEmail: 'test@example.com' }, now))
+      .toContain('ORGANIZER;CN=R.:mailto:test@example.com');
   });
   it('icsEsc escapes', () => {
     expect(icsEsc('Hai, te rog; cu \\ desert\nși flori')).toBe('Hai\\, te rog\\; cu \\\\ desert\\nși flori');

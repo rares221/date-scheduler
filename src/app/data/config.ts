@@ -10,7 +10,7 @@ import { AppConfig } from './config.types';
    ============================================================ */
 export const CONFIG: AppConfig = {
   to: "Iubito",
-  from: "the author",
+  from: "R.",
   organizerEmail: "",                   // emailul tău (opțional)
   title: "Ieși cu mine?",
   subtitle: "Sheeba și cu mine avem o întrebare…",
