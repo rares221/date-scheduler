@@ -88,10 +88,23 @@ Types are in `config.types.ts`.
 - [x] Song for "Da": Love Me Like You (`1WpoKRnoPRU`). Optional: `songs.no` and `songs.question` ids, plus `start` seconds for the chorus.
 - [x] Intro video `vFApMni5qIA` plays embedded (on a hostname origin).
 - [x] Web3Forms key set in `config.ts`; a test email sent from localhost ARRIVED (2026-11-18).
-- [ ] Change the Web3Forms form's website URL in the dashboard to `rares221.github.io`.
+- [x] Change the Web3Forms form's website URL in the dashboard to `rares221.github.io` (done 2026-11-18).
+- [ ] **Private values out of the repo (build-time injection).** Real names (`to`, `from`), `organizerEmail` and the
+  Web3Forms key must not live in git; history was already scrubbed on 2026-11-18 (git-filter-repo + force push), and
+  `config.ts` now holds neutral defaults (`to: "Iubito"`, `from: "R."`, `organizerEmail: ""`). Plan:
+  - Add `src/app/data/private.ts` (git-ignored) exporting `PRIVATE: Partial<Pick<AppConfig, 'to'|'from'|'organizerEmail'>> & { web3formsKey?: string }`,
+    plus a committed `private.example.ts`. `config.ts` merges `PRIVATE` over the neutral defaults.
+  - `scripts/write-private.mjs` generates `private.ts` from env vars (`DS_TO`, `DS_FROM`, `DS_ORGANIZER_EMAIL`,
+    `DS_WEB3FORMS_KEY`), reading a local git-ignored `.env` when present; run it in `prestart`/`prebuild`/`pretest`
+    (tests must pass with the empty example values).
+  - CI: store the values as GitHub **repository secrets** and pass them as `env:` to the build step in `deploy.yml`.
+  - Caveat to keep in mind: GitHub Pages is static, so injected values still end up in the published JS bundle
+    (visible to anyone who opens the live page and views source). This hides them from the repo/history only.
+    Truly hidden values would need a backend (e.g. a serverless function) — out of scope unless the author asks.
+  - After this lands, move the Web3Forms key out of `config.ts` too and scrub it from history the same way.
 - [ ] Test on a real iPhone in Chrome **and** Safari on the live URL.
 - [ ] Fill `CONFIG.availability` with the days and times he's free (optional).
-- [ ] the author may rewrite `activities[].verse` and `times` phrases in his own voice.
+- [ ] The author may rewrite `activities[].verse` and `times` phrases in his own voice.
 - [ ] Optional: set `organizerEmail` so the Google Calendar link adds him as a guest.
 - [ ] Possibly more personal items, added as story panels or activities via CONFIG.
 - [ ] Optional: `songs.no` / `songs.question` ids.
